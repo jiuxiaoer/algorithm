@@ -11,3 +11,9 @@
 
 反复迭代 刷题练习 知识复利
 ![img.png](static/img.png)
+
+学习模型
+
+what why how
+
+是什么? 为什么? 怎么做
