@@ -24,6 +24,8 @@ public class Palindrome<T> {
         size = 0;
     }
 
+
+
     public class Node<T> {
         private T e;
         private Node next;
