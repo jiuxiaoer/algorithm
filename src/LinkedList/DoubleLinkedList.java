@@ -1,6 +1,6 @@
 package LinkedList;
 
-import org.w3c.dom.Node;
+
 
 /**
  * Describe:
@@ -13,27 +13,90 @@ public class DoubleLinkedList<T> {
     private int size;
 
 
-    public void addToTail(T element){
-
+    public void addToTail(T element) {
+        Node node = head;
+        while (node.getNext() != null) {
+            node = node.getNext();
+        }
+        node.setNext(new Node(element,null,node));
+        size++;
     }
-
+    public Node selectByIndex(int index){
+        if (index<0||index > size) {
+            return null;
+        }
+        Node node =head.getNext();
+        int i=0;
+        while (node != null) {
+            if (i==index){
+                return node;
+            }
+            i++;
+            node = node.getNext();
+        }
+        return null;
+    }
     public DoubleLinkedList() {
         this.head = new Node();
         this.size = 0;
     }
 
-    public void addToHead(T element){
-        Node node = head.getNext();
-        head.setNext(new Node(element,node,head));
+    public void addToAfter(int index,T element){
+        if (index<0||index > size) {
+            return ;
+        }
+        Node node = selectByIndex(index);
+        node.setNext(new Node(element,node.getNext(),node));
+        size++;
     }
-    private void printAll(){
+
+    public void addToBefore(int index,T element){
+        if (index<0||index > size) {
+            return ;
+        }
+        Node node = selectByIndex(index).getHead();
+        Node newNode = new Node(element, node.getNext(), node);
+        node.getNext().setHead(newNode);
+        node.setNext(newNode);
+        size++;
+    }
+    public void addToHead(T element) {
+        Node node = head.getNext();
+        if (node != null) {
+            Node snode = new Node(element, node, head);
+            node.setHead(snode);
+            head.setNext(snode);
+        } else {
+            head.setNext(new Node(element, node, head));
+        }
+        size++;
+    }
+    public void deleteByIndex(int index){
+        if (index<0||index > size) {
+            return ;
+        }
+        Node node = selectByIndex(index).getHead();
+        node.setNext(node.getNext().getNext());
+        if (node.getNext()!=null){
+            node.getNext().setHead(node);
+        }
+
+    }
+    public void updateByIndex(int index ,T element){
+        if (index<0||index > size) {
+            return ;
+        }
+        selectByIndex(index).setElement(element);
+    }
+    private void printAll() {
         Node node = head.getNext();
         while (node != null) {
-            System.out.print(node.getElement()+",");
+            System.out.print(node.getElement() + ",");
             node = node.getNext();
         }
     }
-    public class Node{
+
+    public class Node {
         private T element;
         private Node next;
 
@@ -84,8 +147,19 @@ public class DoubleLinkedList<T> {
 
     public static void main(String[] args) {
         DoubleLinkedList doubleLinkedList = new DoubleLinkedList();
-        doubleLinkedList.addToHead(1);
-        doubleLinkedList.addToHead(2);
+//        doubleLinkedList.addToHead(1);
+//        doubleLinkedList.addToHead(2);
+//        doubleLinkedList.addToHead(3);
+//        doubleLinkedList.addToHead(4);
+//        doubleLinkedList.addToHead(5);
+        doubleLinkedList.addToTail(1);
+        doubleLinkedList.addToTail(2);
+        doubleLinkedList.addToTail(3);
+        doubleLinkedList.addToTail(4);
+        doubleLinkedList.addToAfter(3,5);
+        doubleLinkedList.addToBefore(0,9);
+        doubleLinkedList.updateByIndex(0,100);
+        doubleLinkedList.deleteByIndex(5);
         doubleLinkedList.printAll();
 
     }
