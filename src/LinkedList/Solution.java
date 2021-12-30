@@ -53,13 +53,45 @@ public class Solution {
         end.next = end.next.next;
         return pre.next;
     }
+    public ListNode middleNode(ListNode head) {
 
+        ListNode k =head;
+        ListNode m =head;
+        while(k!=null&&k.next!=null){
+            k=k.next.next;
+            m=m.next;
+        }
+
+        return m;
+    }
+    public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode dum =new ListNode(-1);
+        ListNode pre =dum;
+        while (l1 != null&&l2 != null) {
+            if (l1.val>l2.val) {
+                pre.next = l2;
+                l2=l2.next;
+            }else {
+                pre.next = l1;
+                l1=l1.next;
+            }
+            pre=pre.next;
+        }
+        pre.next = l1 == null ? l2 : l1;
+        return dum;
+    }
     public static void main(String[] args) {
         ListNode head = new ListNode(1);
         head.next=new ListNode(2);
         head.next.next=new ListNode(3);
         head.next.next.next=new ListNode(4);
-        removeNthFromEnd(head,1);
+
+        ListNode head1 = new ListNode(1);
+        head1.next=new ListNode(2);
+        head1.next.next=new ListNode(3);
+        head1.next.next.next=new ListNode(4);
+        mergeTwoLists(head,head1);
     }
+
 }
 
