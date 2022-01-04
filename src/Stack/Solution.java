@@ -55,9 +55,75 @@ public class Solution {
         return stack.isEmpty();
     }
 
+    public static int calculate(String s) {
+        Deque<Integer> ops = new LinkedList<Integer>();
+        ops.push(1);
+        int sign = 1;
+        int ret = 0;
+        int n = s.length();
+        int i = 0;
+        while (i < n) {
+            if (s.charAt(i) == ' ') {
+                i++;
+            } else if (s.charAt(i) == '+') {
+                sign = ops.peek();
+                i++;
+            } else if (s.charAt(i) == '-') {
+                sign = -ops.peek();
+                i++;
+            } else if (s.charAt(i) == '(') {
+                ops.push(sign);
+                i++;
+            } else if (s.charAt(i) == ')') {
+                ops.pop();
+                i++;
+            } else {
+                long num = 0;
+                while (i < n && Character.isDigit(s.charAt(i))) {
+                    num = num * 10 + s.charAt(i) - '0';
+                    i++;
+                }
+                ret += sign * num;
+            }
+        }
+        return ret;
+    }
+
+    public static int calculate1(String s) {
+        //栈顶 记录 当前符号
+        Deque<Integer> deque = new LinkedList<>();
+        deque.push(1);
+        int res = 0, num = 0, op = 1;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
+                num = num * 10 + (s.charAt(i) - '0');
+                continue;
+            }
+            res += op * num;                //计算一个运算符
+            num = 0;                        //数值清空
+
+            if (s.charAt(i) == '+') {
+                op = deque.peek();
+            }
+            if (s.charAt(i) == '-') {
+                op = -deque.peek();
+            }
+            if (s.charAt(i) == '(') {
+                deque.push(op);  //进入左括号，把左括号之前的符号置于栈顶
+            }
+            if (s.charAt(i) == ')') {
+                deque.pop();     //退出括号，弹出栈顶符号
+            }
+
+        }
+        res += op * num;                    //计算最后一个数
+
+        return res;
+    }
+
+
     public static void main(String[] args) {
-        String s = "[()[]{}]";
-        System.out.println(isValid1(s));
-        ;
+        String s = "(1+(4+5+2)-3)+(6+8)";
+        System.out.println(calculate1(s));
     }
 }
