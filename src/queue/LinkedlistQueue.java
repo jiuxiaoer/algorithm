@@ -27,37 +27,24 @@ public class LinkedlistQueue {
 
 
     public boolean enqueue(String value){
-        //第一次入队
-        if (tail == null) {
-            //创建第一个节点
-            Node newNode = new Node(value, null);
-            //头 尾 节点指向 新节点
-            head = newNode;
-            tail = newNode;
-        } else {
-            //有了第一个节点之后  尾节点的下一个新建 新节点
-            tail.next = new Node(value, null);
-            // 上面的操作导致尾节点是倒数第二 现在切换一下 交换下位置   保证每次入队都在队尾
-            tail = tail.next;
+        if (head == null){
+            Node node =new Node(value,null);
+            head = node;
+            tail = node;
+            return true;
         }
+        tail.next=new Node(value, null);
+        tail=tail.next;
         return true;
+
     }
 
     public String dequeue(){
-        //头为空
-        if (head==null) {
+        if (head == null){
             return null;
         }
-        //获取头的值
-        String value = head.element;
-        //头的下一个
-        head=head.next;
-        //若头的下一个为空
-        if (head == null) {
-            //尾也为空
-            tail = null;
-        }
-        //返回数据
+        String value=head.element;
+        head = head.next;
         return value;
     }
     public static void main(String[] args) {
@@ -65,6 +52,8 @@ public class LinkedlistQueue {
         queue.enqueue("1");
         queue.enqueue("2");
         queue.enqueue("3");
+        queue.dequeue();
+        queue.dequeue();
         queue.dequeue();
         System.out.println(queue.dequeue());
     }
