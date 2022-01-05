@@ -28,7 +28,6 @@ public class ArrayQueue {
 
             tail-=head;
             head=0;
-            return true;
         }
         this.data[tail] = item;
         tail++;
