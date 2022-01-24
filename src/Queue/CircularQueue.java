@@ -1,4 +1,4 @@
-package queue;
+package Queue;
 
 /**
  * 循环队列
