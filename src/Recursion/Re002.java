@@ -34,6 +34,6 @@ public class Re002 {
     }
 
     public static void main(String[] args) {
-        System.out.println(Re003(6));
+        System.out.println(Re002(6));
     }
 }
