@@ -71,67 +71,71 @@ public class Sort {
     }
 
     /**
+     * 归并待优化 2022-02-10
+     * 优化：使用哨兵优化 数组合并
+     * 使用非数组的形式 递归
      * http://mp.weixin.qq.com/s?__biz=MzIxNTQ3NDMzMw==&mid=2247486212&idx=1&sn=ce7d4cd71f4d578dc9237b929f0b5937&chksm=979682f6a0e10be0461f2aedfdca9b05a5aa6ccd6c3776c1edc4158cd25f47e68438accd1e54#rd
+     *
      * @param arr
      */
     public static void mergeSort(int[] arr) {
-        //若数组长度为1或比1更小 直接返回
-        if (arr.length<=1){
+        if (arr.length <= 1) {
+            //终止条件
             return;
         }
-        //数组从0开始 长度-1
-        int mid =(arr.length -1)/2;
-        //储存上半段数组
-        int[] a1= new int[mid+1];
-        //储存下半段数组
-        int[] a2=new int[arr.length-mid-1];
-        //赋值上半段
-        copyArr(arr, 0, mid, a1);
-        //赋值下半段
-        copyArr(arr, mid+1, arr.length-1, a2);
-        //拆分上半段
+        //数据拆分开始
+        //求数组中间数
+        int mid = (arr.length -1)/2;
+        //保留数组的前半部分
+        int[] a1 = new int[mid+1];
+        //保留数组的后半部分
+        int[] a2 = new int[arr.length - 1 - mid];
+        copyArray(arr, 0, mid, a1);
+        copyArray(arr, mid + 1, arr.length - 1, a2);
         mergeSort(a1);
-        //拆分下半段
         mergeSort(a2);
-        //因递归先进后出的特性 压栈完毕后 开始合并
-        merge(a1, a2, arr);
+        //数据拆分结束
+        merge(a1,a2,arr);
     }
 
-    private static void merge(int[] s1, int[] s2, int[] dest) {
-        int i=0;
-        int j=0;
-
-        for (int k = 0; k <dest.length; k++) {
-            //如果s1已经遍历完，直接把s2[j]复制给dest[pos]，并给j自增1
-            if (i == s1.length){
-                dest[k] = s2[j++];
+    /**
+     *
+     * @param a1 比较的数组
+     * @param a2 比较的数组
+     * @param arr 排序的数组
+     */
+    private static void merge(int[] a1, int[] a2, int[] arr) {
+        int i=0 ,j =0;
+        for (int k = 0; k <arr.length ; k++) {
+            if (j==a2.length){
+                arr[k]=a1[i++];
                 continue;
             }
-            //如果s2已经遍历完，直接把s1[i]复制给dest[pos]，并给i自增1
-            if (j == s2.length) {
-                dest[k] = s1[i++];
+            if (i==a1.length){
+                arr[k]=a2[j++];
                 continue;
             }
-            if (s1[i]<=s2[j]){
-                dest[k]=s1[i++];
+            if (a1[i]<=a2[j]){
+                arr[k] = a1[i++];
             }else {
-                dest[k] = s2[j++];
+                arr[k] = a2[j++];
             }
+
         }
     }
 
     /**
-     * 将源数组中指定下标的元素复制到目标数组中
-     * @param source    源数组
-     * @param low       源数组初始下标
-     * @param high      源数组末尾下标
-     * @param dest      目标数组
+     * @param arr 数据源
+     * @param i   数据搬迁开始下标
+     * @param mid 数据搬迁结束下标
+     * @param a1  被嵌入的数组
      */
-    private static void copyArr(int[] source, int low, int high, int[] dest) {
-        for (int i = low; i <=high ; i++) {
-            dest[i-low]=source[i];
+    private static void copyArray(int[] arr, int i, int mid, int[] a1) {
+        for (int j = i; j <= mid; j++) {
+            a1[j - i] = arr[j];
         }
     }
+
 
     // 递归调用函数
     private static void mergeSortInternally(int[] a, int p, int r) {
@@ -140,7 +144,7 @@ public class Sort {
     }
 
     public static void main(String[] args) {
-        int[] arr = {11,8,3,9,7,1,2,5};
+        int[] arr = {11, 8, 3, 9, 7, 1, 2, 5};
         mergeSort(arr);
         for (int i = 0; i < arr.length; i++) {
             System.out.println(arr[i]);
