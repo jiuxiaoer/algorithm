@@ -244,8 +244,8 @@ public class Sort {
     public static void main(String[] args) {
         int[] arr = {11,8,3,9,7,1,2,5};
         quickSort(arr, arr.length);
-        for (int i = 0; i <arr.length ; i++) {
-            System.out.println(arr[i]);
+        for (int j : arr) {
+            System.out.println(j);
         }
     }
 }
