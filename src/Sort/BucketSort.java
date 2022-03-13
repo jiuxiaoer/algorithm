@@ -8,7 +8,7 @@ import java.util.Arrays;
  * CreateTime: 2022/2/22 14:10
  */
 
-public class LinearSort {
+public class BucketSort {
     /**
      * 线性排序
      */
