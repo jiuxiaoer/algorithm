@@ -45,8 +45,61 @@ public class BinarySearch {
     }
 
     public static void main(String[] args) {
-        int[] arr = {8, 11, 19, 23, 27, 33, 45, 55, 67, 98};
-//        binarySearch(arr, 8);
-        binarySearchRecursion(arr, 0,arr.length-1,8);
+//        int[] arr = {8, 11, 19, 23, 27, 33, 45, 55, 67, 98};
+        int[] arr = {1, 3, 4, 5, 6, 11, 18,8, 8, 8};
+
+        //        普通二分查找
+        //        binarySearch(arr, 8);
+        //        递归二分查找
+        //        binarySearchRecursion(arr, 0,arr.length-1,8);
+//        binarySearchFirst(arr, 8);
+        binarySearchFinally(arr, 8);
+    }
+
+    private static void binarySearchFinally(int[] arr, int i) {
+        int low = 0;
+        int higt = arr.length - 1;
+        while (low<=higt){
+            int mid=(low+higt)/2;
+            if (arr[mid] ==i){
+                if (mid+1!= arr.length&&arr[mid+1] == i){
+                    low=mid+1;
+                }else {
+                    System.out.println(arr[mid]);
+                    System.out.println(mid);
+                    return;
+                }
+                continue;
+            }
+            if (arr[mid]>i){
+                higt=mid-1;
+            } else
+            if (arr[mid]<i){
+                low = mid+1;
+            }
+        }
+    }
+
+    private static void binarySearchFirst(int[] arr, int i) {
+        int low = 0;
+        int higt = arr.length - 1;
+        while (low<=higt){
+            int mid=(low+higt)/2;
+            if (arr[mid] ==i){
+                if (mid-1!=-1&&arr[mid-1] == i){
+                    higt=mid-1;
+                }else {
+                    System.out.println(arr[mid]);
+                    System.out.println(mid);
+                    return;
+                }
+            }
+            if (arr[mid]>i){
+                higt=mid-1;
+            } else
+            if (arr[mid]<i){
+                low = mid+1;
+            }
+        }
     }
 }
